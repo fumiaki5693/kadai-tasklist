@@ -8,7 +8,7 @@
           <%= link_to task.user.name, user_path(task.user) %><span class="text-muted">posted at <%= task.created_at %></span>
         </div>
         <div>
-          <p class="mb=0"><%= link_to task.id, task_path(task.id) %>:<%= task.content %>/<%= task.status %></p>
+          <p class="mb=0"><%= link_to task.id, task_path(task.id) %>：<%= task.content %>／<%= task.status %></p>
         </div>
       </div>
     </li>
