@@ -1,7 +1,17 @@
 class TasksController < ApplicationController
-  before_action :require_user_logged_in
+  before_action :require_user_logged_in, only: [:create, :show, :edit, :update, :destroy]
   before_action :correct_user, only: [:show, :edit, :update, :destroy]
-    
+  
+  
+  def index
+    if logged_in?
+      @task = current_user.tasks.build  # form_with 用
+      @tasks = current_user.tasks.order(id: :desc).page(params[:page])
+    else
+      redirect_to login_path
+    end
+  end
+
   def create
     @task = current_user.tasks.build(task_params)
     if @task.save
@@ -10,7 +20,7 @@ class TasksController < ApplicationController
     else
       @tasks = current_user.feed_tasks.order(id: :desc).page(params[:page])
       flash.now[:danger] = 'タスクの投稿に失敗しました。'
-      render 'toppages/index'
+      render :task
     end
   end
   
